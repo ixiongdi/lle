@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fun.xruo.lle.sys.dao.SysUserDAO">
+
+    <sql id="whereClause">
+        <if test="null != id">
+            and t.id = #{id}
+        </if>
+        <if test="null != username">
+            and t.username = #{username}
+        </if>
+        <if test="null != password">
+            and t.password = #{password}
+        </if>
+        <if test="null != gmtCreate">
+            and t.gmt_create = #{gmtCreate}
+        </if>
+        <if test="null != gmtModified">
+            and t.gmt_modified = #{gmtModified}
+        </if>
+        <if test="null != deleted">
+            and t.is_deleted = #{deleted}
+        </if>
+    </sql>
+
+    <sql id="updateWhereClause">
+    </sql>
+
+    <sql id="columnList">
+        id, username, password, gmt_create, gmt_modified, is_deleted
+    </sql>
+
+    <sql id="selectColumnList">
+        t.id as id, t.username as username, t.password as password, gmt_create as gmtCreate, gmt_modified as gmtModified, is_deleted as deleted
+    </sql>
+
+    <select id="get" parameterType="long" resultType="sysUser">
+        SELECT
+        <include refid="selectColumnList"></include>
+        FROM sys_user t
+        WHERE t.id = #{id}
+    </select>
+
+    <select id="list" parameterType="sysUser" resultType="sysUser">
+        SELECT
+        <include refid="selectColumnList"></include>
+        FROM sys_user t
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <select id="count" parameterType="sysUser" resultType="long">
+        SELECT COUNT(*) FROM sys_user <include refid="whereClause"></include>
+    </select>
+
+    <insert id="insert" parameterType="sysUser">
+        INSERT INTO sys_user (
+        <include refid="columnList"></include>
+        ) VALUES(#{id}, #{username}, #{password}, #{gmtCreate}, #{gmtModified}, #{deleted})
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM sys_user t WHERE t.id = #{id}
+    </delete>
+
+    <update id="update" parameterType="sysUser">
+        UPDATE sys_user t SET
+        t.username = #{username},
+        t.password = #{password},
+        t.gmt_create = #{gmtCreate},
+        t.gmt_modified = #{gmtModified},
+        t.is_deleted = #{deleted}
+        WHERE t.id = #{id}
+    </update>
+
+
+</mapper>
