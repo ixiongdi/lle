@@ -11,4 +11,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
+
 }

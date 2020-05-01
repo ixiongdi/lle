@@ -4,7 +4,7 @@ package fun.xruo.lle.common;
  * @author xiongdi (kotlin@qq.com)
  * @since 2020/4/30 17:12
  */
-public class BaseController {
+public abstract class BaseController {
 
     protected RestResponse ok() {
         RestResponse response = new RestResponse();

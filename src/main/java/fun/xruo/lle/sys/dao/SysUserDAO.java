@@ -13,4 +13,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface SysUserDAO extends BaseDAO<SysUser> {
 
+
 }

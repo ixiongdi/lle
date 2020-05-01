@@ -4,12 +4,8 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-/**
- * @author xiongdi (kotlin@qq.com)
- * @since 2020/4/30 18:55
- */
 @Data
-public abstract class Base {
+public abstract class BaseDO {
     /**
      * id, bigint unsigned
      */

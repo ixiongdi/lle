@@ -4,75 +4,173 @@
 
     <sql id="whereClause">
         <if test="null != id">
-            and t.id = #{id}
+            and id = #{id}
         </if>
         <if test="null != username">
-            and t.username = #{username}
+            and username = #{username}
         </if>
         <if test="null != password">
-            and t.password = #{password}
+            and password = #{password}
         </if>
         <if test="null != gmtCreate">
-            and t.gmt_create = #{gmtCreate}
+            and gmt_create = #{gmtCreate}
         </if>
         <if test="null != gmtModified">
-            and t.gmt_modified = #{gmtModified}
+            and gmt_modified = #{gmtModified}
         </if>
         <if test="null != deleted">
-            and t.is_deleted = #{deleted}
+            and is_deleted = #{deleted}
         </if>
+<!--        <if test="null != ids">-->
+<!--            id in-->
+<!--            <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">-->
+<!--                #{item}-->
+<!--            </foreach>-->
+<!--        </if>-->
     </sql>
 
-    <sql id="updateWhereClause">
+    <sql id="updateClause">
+        <set>
+            <if test="null != username">
+                username = #{username},
+            </if>
+            <if test="null != password">
+                password = #{password},
+            </if>
+            gmt_modified = CURRENT_TIMESTAMP(),
+            <if test="null != deleted">
+                is_deleted = #{deleted}
+            </if>
+        </set>
     </sql>
 
-    <sql id="columnList">
+    <sql id="baseColumns">
+        username, password
+    </sql>
+
+    <sql id="fullColumns">
         id, username, password, gmt_create, gmt_modified, is_deleted
     </sql>
 
-    <sql id="selectColumnList">
-        t.id as id, t.username as username, t.password as password, gmt_create as gmtCreate, gmt_modified as gmtModified, is_deleted as deleted
+    <sql id="selectClause">
+        id as id, username as username, password as password, gmt_create as gmtCreate, gmt_modified as gmtModified, is_deleted as deleted
     </sql>
 
-    <select id="get" parameterType="long" resultType="sysUser">
-        SELECT
-        <include refid="selectColumnList"></include>
-        FROM sys_user t
-        WHERE t.id = #{id}
-    </select>
+    <insert id="insert" parameterType="sys_user">
+        INSERT INTO sys_user (<include refid="baseColumns"></include>)
+        VALUES (#{username}, #{password})
+    </insert>
 
-    <select id="list" parameterType="sysUser" resultType="sysUser">
+    <insert id="insertBatch" parameterType="list">
+        INSERT INTO sys_user (<include refid="baseColumns"></include>)
+        VALUES
+        <foreach item="item" index="index" collection="list" open="" separator="," close="">
+            (#{username}, #{password})
+        </foreach>
+    </insert>
+
+    <select id="select" parameterType="sys_user" resultType="sys_user">
         SELECT
-        <include refid="selectColumnList"></include>
-        FROM sys_user t
+        <include refid="selectClause"></include>
+        FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>
     </select>
 
-    <select id="count" parameterType="sysUser" resultType="long">
-        SELECT COUNT(*) FROM sys_user <include refid="whereClause"></include>
+    <select id="selectById" parameterType="long" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        WHERE id = #{id}
     </select>
 
-    <insert id="insert" parameterType="sysUser">
-        INSERT INTO sys_user (
-        <include refid="columnList"></include>
-        ) VALUES(#{id}, #{username}, #{password}, #{gmtCreate}, #{gmtModified}, #{deleted})
-    </insert>
+    <select id="selectBatchByIds" parameterType="list" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        WHERE id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
-    <delete id="delete" parameterType="long">
-        DELETE FROM sys_user t WHERE t.id = #{id}
+    <select id="selectBatchByArgs" parameterType="map" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <select id="count" parameterType="sys_user" resultType="long">
+        SELECT COUNT(*) FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <select id="countByArgs" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <update id="update" parameterType="sys_user">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateById">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        WHERE id = #{t.id}
+    </update>
+
+    <update id="updateBatchByIds">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        WHERE id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateBatchByArgs" parameterType="map">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="sys_user">
+        DELETE FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
     </delete>
 
-    <update id="update" parameterType="sysUser">
-        UPDATE sys_user t SET
-        t.username = #{username},
-        t.password = #{password},
-        t.gmt_create = #{gmtCreate},
-        t.gmt_modified = #{gmtModified},
-        t.is_deleted = #{deleted}
-        WHERE t.id = #{id}
-    </update>
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM sys_user WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteBatchByIds" parameterType="list">
+        DELETE FROM sys_user WHERE id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="deleteBatchByArgs" parameterType="map">
+        DELETE FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
 
 
 </mapper>

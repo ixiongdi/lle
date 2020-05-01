@@ -13,20 +13,34 @@ import javax.annotation.Resource;
  * @since 2020/4/30 15:55
  */
 @RestController
-@RequestMapping("/api/sys/sysUser")
+@RequestMapping("/api/sys/sys_user")
 public class SysController extends BaseController {
 
     @Resource
     SysUserService sysUserService;
 
-    @RequestMapping("/get")
+    @RequestMapping("index")
+    public Object index(Integer page, Integer size) {
+
+        return ok();
+    }
+
+    @RequestMapping("get")
     public Object get(Long id) {
+
         return ok(sysUserService.get(id));
     }
 
     @RequestMapping("list")
     public Object list(SysUser sysUser) {
+
         return ok(sysUserService.list(sysUser));
+    }
+
+    @RequestMapping("save")
+    public Object save(SysUser sysUser) {
+        sysUserService.save(sysUser);
+        return ok();
     }
 
     @RequestMapping("insert")
@@ -46,8 +60,15 @@ public class SysController extends BaseController {
         return ok();
     }
 
+    @RequestMapping("remove")
+    public Object remove(Long id) {
+        sysUserService.remove(id);
+        return ok();
+    }
+
     @RequestMapping("update")
     public Object update(SysUser sysUser) {
-        return ok(sysUserService.list(sysUser));
+        sysUserService.update(sysUser);
+        return ok();
     }
 }

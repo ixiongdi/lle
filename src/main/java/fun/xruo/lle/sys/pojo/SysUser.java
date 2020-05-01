@@ -1,10 +1,8 @@
 package fun.xruo.lle.sys.pojo;
 
-import fun.xruo.lle.common.Base;
+import fun.xruo.lle.common.BaseDO;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
-
-import java.time.LocalDateTime;
 
 /**
  * @author xiongdi (kotlin@qq.com)
@@ -12,14 +10,8 @@ import java.time.LocalDateTime;
  * sys_user
  */
 @Data
-@Alias("sysUser")
-public class SysUser extends Base {
-
-    /**
-     * id, bigint unsigned
-     */
-    private Long id;
-
+@Alias("sys_user")
+public class SysUser extends BaseDO {
     /**
      *
      */
@@ -28,18 +20,4 @@ public class SysUser extends Base {
      *
      */
     private String password;
-
-    /**
-     * gmt_create, datetime
-     */
-    private LocalDateTime gmtCreate;
-    /**
-     * gmt_modified, datetime
-     */
-    private LocalDateTime gmtModified;
-
-    /**
-     * is_deleted, unsigned tinyint
-     */
-    private Boolean deleted;
 }
