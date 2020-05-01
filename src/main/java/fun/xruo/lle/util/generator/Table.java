@@ -13,4 +13,6 @@ public class Table {
 
 
     private String upperCamelName;
+
+    private String packageName;
 }

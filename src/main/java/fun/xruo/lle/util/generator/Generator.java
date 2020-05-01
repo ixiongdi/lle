@@ -1,8 +1,15 @@
 package fun.xruo.lle.util.generator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.CaseFormat;
+import com.google.common.io.Files;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +21,41 @@ public class Generator {
     private static final String URL = "jdbc:mysql://localhost/test?useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "123456";
+    private static final String PACKAGE = "fun.xruo.lle.sys.pojo";
 
     public static void main(String[] args) {
         Generator generator = new Generator();
         generator.run();
+    }
+
+    private void write(Table table) {
+        try {
+            // 创建配置类
+            Configuration configuration = new Configuration(Configuration.VERSION_2_3_30);
+            // 设置模板路径 toURI()防止路径出现空格
+            String classpath = this.getClass().getResource("/").toURI().getPath();
+            configuration.setDirectoryForTemplateLoading(new File(classpath + "/templates/"));
+            // 设置字符集
+            configuration.setDefaultEncoding("UTF-8");
+            configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+            configuration.setLogTemplateExceptions(false);
+            configuration.setWrapUncheckedExceptions(true);
+            configuration.setFallbackOnNullLoopVariable(false);
+            // 加载模板
+            Template template = configuration.getTemplate("do.ftl");
+            // 数据模型
+            FileWriter writer = new FileWriter("target/generated-sources/" + table.getUpperCamelName() + ".java");
+            template.process(table, writer);
+            // 静态化
+//            String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, table);
+            // 打印静态化内容
+//            log.info(content);
+//            File file = new File("target/generated-sources/" + table.getUpperCamelName() + ".java");
+//            Files.write(content.getBytes(), file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void run() {
@@ -29,7 +67,9 @@ public class Generator {
             for (Table table : tables) {
                 List<Column> columns = getColumnList(connection, table);
                 table.setColumns(columns);
+                table.setPackageName(PACKAGE);
                 log.info("table: {}", table);
+                write(table);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,6 +88,9 @@ public class Generator {
                 table.setName(rs.getString(3));
                 table.setRemarks(rs.getString(5));
                 table.setUpperCamelName(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, table.getName()));
+                if (table.getName().equals("sys_config")) {
+                    continue;
+                }
                 list.add(table);
                 log.info("table: {}", table);
             }
