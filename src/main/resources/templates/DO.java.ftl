@@ -1,4 +1,4 @@
-package ${packageName};
+package ${packageName + ".pojo"};
 
 import fun.xruo.lle.common.BaseDO;
 import lombok.Data;

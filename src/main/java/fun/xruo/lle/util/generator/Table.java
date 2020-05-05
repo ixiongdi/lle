@@ -14,5 +14,7 @@ public class Table {
 
     private String upperCamelName;
 
+    private String lowerCamelName;
+
     private String packageName;
 }
