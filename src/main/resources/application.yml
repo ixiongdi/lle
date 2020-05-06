@@ -1,8 +1,8 @@
 spring:
     datasource:
-        url: jdbc:mysql://mysql.ca3zw9ojro1a.rds.cn-northwest-1.amazonaws.com.cn/test?useSSL=false
+        url: jdbc:mysql://localhost/test?useSSL=false
         username: root
-        password: qw3erTYU
+        password: 123456
 
 mybatis:
     type-aliases-package: fun.xruo.lle.*.pojo

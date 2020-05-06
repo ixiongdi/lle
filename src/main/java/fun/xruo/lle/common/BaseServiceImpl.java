@@ -2,6 +2,7 @@ package fun.xruo.lle.common;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
@@ -121,6 +122,7 @@ public class BaseServiceImpl<T extends BaseDO> implements BaseService<T> {
     public void remove(Long id) {
         try {
             T t = getClazz().newInstance();
+//            TypeToken<T> tt = new TypeToken<T>() {};
             t.setDeleted(true);
             dao.updateById(id, t);
         } catch (IllegalAccessException | InstantiationException e) {
