@@ -17,10 +17,13 @@ import java.util.List;
 public class Generator {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost/test?useSSL=false";
+    private static final String URL = "jdbc:mysql://localhost/test?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "123456";
     private static final String PACKAGE = "fun.xruo.lle.sys";
+    private static final String GROUP_ID = "fun.xruo.lle";
+    private static final String ARTIFACT_ID = "";
+    private static final String MODULE_ID = "sys";
     private static final List<TemplateFile> TEMPLATES = Arrays.asList(
             new TemplateFile("Controller", "Controller.java.ftl", "java"),
             new TemplateFile("DAO", "DAO.java.ftl", "java"),

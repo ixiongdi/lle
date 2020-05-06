@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="${packagingName}.dao.${upperCamelName}DAO">
+<mapper namespace="${packageName}.dao.${upperCamelName}DAO">
 
     <sql id="whereClause">
         <#list columns as column>
             <if test="null != ${column.lowerCamelName}">
-                and ${column.name} = #{column.lowerCamelName}
+                and ${column.name} = ${column.lowerCamelName}
             </if>
         </#list>
     </sql>
@@ -26,7 +26,7 @@
                         <#break>
                     <#default>
                         <if test="null != ${column.lowerCamelName}">
-                            and ${column.name} = #{column.lowerCamelName}
+                            and ${column.name} = ${column.lowerCamelName}
                         </if>
                 </#switch>
             </#list>
@@ -43,31 +43,31 @@
 
     <sql id="fullColumns">
         <#list columns as column>
-            ${column.name}<#if column.has_next>,</#if>
+            ${column.name}<#sep>,</#sep>
         </#list>
     </sql>
 
     <sql id="selectClause">
         <#list columns as column>
-            ${column.name} as ${column.lowerCamelName}<#if column.has_next>,</#if>
+            ${column.name} as ${column.lowerCamelName}<#sep>,</#sep>
         </#list>
     </sql>
 
     <insert id="insert" parameterType="${name}">
-        INSERT INTO ${column.name} (<include refid="baseColumns"></include>)
+        INSERT INTO ${name} (<include refid="baseColumns"></include>)
         VALUES (
         <#list columns as column>
-            ${column.lowerCamelName}<#if column.has_next>,</#if>
+            ${column.lowerCamelName}<#sep>,</#sep>
         </#list>
         )
     </insert>
 
     <insert id="insertBatch" parameterType="list">
-        INSERT INTO sys_user (<include refid="baseColumns"></include>)
+        INSERT INTO ${name} (<include refid="baseColumns"></include>)
         VALUES
         <foreach item="item" index="index" collection="list" open="" separator="," close="">
             (<#list columns as column>
-            ${column.lowerCamelName}<#if column.has_next>,</#if>
+            ${column.lowerCamelName}<#sep>,</#sep>
             </#list>)
         </foreach>
     </insert>
@@ -85,7 +85,7 @@
         SELECT
         <include refid="selectClause"></include>
         FROM ${name}
-        WHERE id = #{id}
+        WHERE id = ${"#"}{id}
     </select>
 
     <select id="selectBatchByIds" parameterType="list" resultType="${name}">
@@ -94,7 +94,7 @@
         FROM ${name}
         WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
-            #{item}
+            ${'#'}{item}
         </foreach>
     </select>
 
@@ -124,13 +124,13 @@
     <update id="update" parameterType="${name}">
         UPDATE sys_user
         <include refid="updateClause"></include>
-        WHERE id = #{id}
+        WHERE id =  ${'#'}{id}
     </update>
 
     <update id="updateById">
         UPDATE sys_user
         <include refid="updateClause"></include>
-        WHERE id = #{id}
+        WHERE id =  ${'#'}{id}
     </update>
 
     <update id="updateBatchByIds">
@@ -138,7 +138,7 @@
         <include refid="updateClause"></include>
         WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
-            #{item}
+            ${'#'}{item}
         </foreach>
     </update>
 
@@ -158,13 +158,13 @@
     </delete>
 
     <delete id="deleteById" parameterType="long">
-        DELETE FROM ${name} WHERE id = #{id}
+        DELETE FROM ${name} WHERE id =  ${'#'}{id}
     </delete>
 
     <delete id="deleteBatchByIds" parameterType="list">
         DELETE FROM ${name} WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
-            #{item}
+            ${'#'}{item}
         </foreach>
     </delete>
 

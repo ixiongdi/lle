@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fun.xruo.lle.sys.dao.SysUserDAO">
+
+    <sql id="whereClause">
+            <if test="null != id">
+                and id = id
+            </if>
+            <if test="null != username">
+                and username = username
+            </if>
+            <if test="null != password">
+                and password = password
+            </if>
+            <if test="null != gmtCreate">
+                and gmt_create = gmtCreate
+            </if>
+            <if test="null != gmtModified">
+                and gmt_modified = gmtModified
+            </if>
+            <if test="null != isDeleted">
+                and is_deleted = isDeleted
+            </if>
+    </sql>
+
+    <sql id="updateClause">
+        <set>
+                        <if test="null != username">
+                            and username = username
+                        </if>
+                        <if test="null != password">
+                            and password = password
+                        </if>
+                        gmt_modified = CURRENT_TIMESTAMP(),
+                        <if test="null != isDeleted">
+                            and is_deleted = isDeleted
+                        </if>
+        </set>
+    </sql>
+
+    <sql id="baseColumns">
+    </sql>
+
+    <sql id="fullColumns">
+            id,
+            username,
+            password,
+            gmt_create,
+            gmt_modified,
+            is_deleted
+    </sql>
+
+    <sql id="selectClause">
+            id as id,
+            username as username,
+            password as password,
+            gmt_create as gmtCreate,
+            gmt_modified as gmtModified,
+            is_deleted as isDeleted
+    </sql>
+
+    <insert id="insert" parameterType="sys_user">
+        INSERT INTO sys_user (<include refid="baseColumns"></include>)
+        VALUES (
+            id,
+            username,
+            password,
+            gmtCreate,
+            gmtModified,
+            isDeleted
+        )
+    </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        INSERT INTO sys_user (<include refid="baseColumns"></include>)
+        VALUES
+        <foreach item="item" index="index" collection="list" open="" separator="," close="">
+            (
+            id,
+            
+            username,
+            
+            password,
+            
+            gmtCreate,
+            
+            gmtModified,
+            
+            isDeleted
+            )
+        </foreach>
+    </insert>
+
+    <select id="select" parameterType="sys_user" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="long" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectBatchByIds" parameterType="list" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        WHERE id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectBatchByArgs" parameterType="map" resultType="sys_user">
+        SELECT
+        <include refid="selectClause"></include>
+        FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <select id="count" parameterType="sys_user" resultType="long">
+        SELECT COUNT(*) FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <select id="countByArgs" parameterType="map" resultType="long">
+        SELECT COUNT(*) FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+    <update id="update" parameterType="sys_user">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        WHERE id =  #{id}
+    </update>
+
+    <update id="updateById">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        WHERE id =  #{id}
+    </update>
+
+    <update id="updateBatchByIds">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        WHERE id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateBatchByArgs" parameterType="map">
+        UPDATE sys_user
+        <include refid="updateClause"></include>
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="sys_user">
+        DELETE FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </delete>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM sys_user WHERE id =  #{id}
+    </delete>
+
+    <delete id="deleteBatchByIds" parameterType="list">
+        DELETE FROM sys_user WHERE id in
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="deleteBatchByArgs" parameterType="map">
+        DELETE FROM sys_user
+        <where>
+            <include refid="whereClause"></include>
+        </where>
+    </select>
+
+
+</mapper>
