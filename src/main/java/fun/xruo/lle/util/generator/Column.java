@@ -35,6 +35,8 @@ public class Column {
 
     static public String getJavaClassNameByTypeName(String name) {
         switch (name) {
+            case "INT":
+                return "java.lang.Integer";
             case "BIGINT UNSIGNED":
                 return "java.lang.Long";
             case "VARCHAR":

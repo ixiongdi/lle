@@ -5,12 +5,14 @@ import lombok.Data;
 @Data
 public class TemplateFile {
     private String name;
-    private String path;
     private String type;
+    private String srcPath;
+    private String dstPath;
 
-    public TemplateFile(String name, String path, String type) {
+    public TemplateFile(String name, String type, String srcPath, String dstPath) {
         this.name = name;
-        this.path = path;
         this.type = type;
+        this.srcPath = srcPath;
+        this.dstPath = dstPath;
     }
 }

@@ -6,10 +6,11 @@ import ${packageName}.service.${upperCamelName}Service;
 import org.springframework.stereotype.Service;
 
 /**
-* @author xiongdi (kotlin@qq.com)
-* @since 2020/4/30 16:00
+* @author CodeGenerate (https://github.com/ixiongdi/lle)
+* @since ${.now}
+* ${name}
 */
 @Service
-public class ${upperCamelName}ServiceImpl extends BaseServiceImpl<SysUser> implements ${upperCamelName}Service {
+public class ${upperCamelName}ServiceImpl extends BaseServiceImpl<${upperCamelName}> implements ${upperCamelName}Service {
 
-    }
+}

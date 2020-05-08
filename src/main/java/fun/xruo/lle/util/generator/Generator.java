@@ -5,14 +5,14 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Import;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,17 +30,17 @@ public class Generator {
     private static final String URL = "jdbc:mysql://localhost/test?useSSL=false&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "123456";
-    private static final String PACKAGE = "fun.xruo.lle.sys";
+    private static final String PACKAGE = "fun.xruo.lle.demo";
     private static final String GROUP_ID = "fun.xruo.lle";
     private static final String ARTIFACT_ID = "";
     private static final String MODULE_ID = "sys";
     private static final List<TemplateFile> TEMPLATES = Arrays.asList(
-            new TemplateFile("Controller", "Controller.java.ftl", "java"),
-            new TemplateFile("DAO", "DAO.java.ftl", "java"),
-            new TemplateFile("DO", "DO.java.ftl", "java"),
-            new TemplateFile("Service", "Service.java.ftl", "java"),
-            new TemplateFile("ServiceImpl", "ServiceImpl.java.ftl", "java"),
-            new TemplateFile("DAO", "DAO.xml.ftl", "xml")
+            new TemplateFile("Controller", "java", "Controller.java.ftl", "controller/"),
+            new TemplateFile("DAO", "java", "DAO.java.ftl", "dao/"),
+            new TemplateFile("", "java", "DO.java.ftl", "pojo/"),
+            new TemplateFile("Service", "java", "Service.java.ftl", "service/"),
+            new TemplateFile("ServiceImpl", "java", "ServiceImpl.java.ftl", "service/impl/"),
+            new TemplateFile("DAO", "xml", "DAO.xml.ftl", "dao/")
     );
 
     @Resource
@@ -64,12 +64,18 @@ public class Generator {
             configuration.setLogTemplateExceptions(false);
             configuration.setWrapUncheckedExceptions(true);
             configuration.setFallbackOnNullLoopVariable(false);
-
+            if (!Files.isDirectory(Paths.get("gen"))) {
+                Files.createDirectory(Paths.get("gen"));
+            }
             for (TemplateFile file : TEMPLATES) {
                 // 加载模板
-                Template template = configuration.getTemplate(file.getPath());
+                Template template = configuration.getTemplate(file.getSrcPath());
+
+                if (!Files.isDirectory(Paths.get("gen", file.getDstPath()))) {
+                    Files.createDirectories(Paths.get("gen", file.getDstPath()));
+                }
                 // 数据模型
-                FileWriter writer = new FileWriter("gen/" + table.getUpperCamelName() + file.getName() + "." + file.getType());
+                FileWriter writer = new FileWriter("gen/" + file.getDstPath() + table.getUpperCamelName() + file.getName() + "." + file.getType());
                 template.process(table, writer);
             }
 

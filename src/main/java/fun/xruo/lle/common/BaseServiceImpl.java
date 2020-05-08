@@ -1,8 +1,6 @@
 package fun.xruo.lle.common;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
@@ -16,8 +14,7 @@ import java.util.Map;
  * @since 2020/4/30 16:06
  */
 @Slf4j
-public class BaseServiceImpl<T extends BaseDO> implements BaseService<T> {
-
+public abstract class BaseServiceImpl<T extends BaseDO> implements BaseService<T> {
 
     @Resource
     BaseDAO<T> dao;

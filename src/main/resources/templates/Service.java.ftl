@@ -4,8 +4,9 @@ import fun.xruo.lle.common.BaseService;
 import ${packageName}.pojo.${upperCamelName};
 
 /**
-* @author xiongdi (kotlin@qq.com)
-* @since 2020/4/30 15:59
+* @author CodeGenerate (https://github.com/ixiongdi/lle)
+* @since ${.now}
+* ${name}
 */
-public interface SysUserService extends BaseService<SysUser> {
-    }
+public interface ${upperCamelName}Service extends BaseService<${upperCamelName}> {
+}
