@@ -158,13 +158,13 @@
     </delete>
 
     <delete id="deleteById" parameterType="long">
-        DELETE FROM ${name} WHERE id =  ${'#'}{id}
+        DELETE FROM ${name} WHERE id = ${'#'}{id}
     </delete>
 
     <delete id="deleteBatchByIds" parameterType="list">
         DELETE FROM ${name} WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
-            ${'#'}{item}
+            ${r'#{item}'}
         </foreach>
     </delete>
 

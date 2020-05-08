@@ -12,10 +12,10 @@ import org.apache.ibatis.type.Alias;
 @Data
 @Alias("sys_user")
 public class SysUser extends BaseDO {
-    private java.math.BigInteger id;
+    private java.lang.Long id;
     private java.lang.String username;
     private java.lang.String password;
-    private java.sql.Timestamp gmtCreate;
-    private java.sql.Timestamp gmtModified;
-    private java.lang.Integer isDeleted;
+    private java.time.LocalDateTime gmtCreate;
+    private java.time.LocalDateTime gmtModified;
+    private java.lang.Boolean isDeleted;
 }

@@ -13,6 +13,6 @@ import org.apache.ibatis.type.Alias;
 @Alias("${name}")
 public class ${upperCamelName} extends BaseDO {
 <#list columns as column>
-    private ${column.className} ${column.lowerCamelName};
+    private ${column.javaType} ${column.lowerCamelName};
 </#list>
 }

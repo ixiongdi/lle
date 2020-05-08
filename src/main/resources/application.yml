@@ -7,3 +7,9 @@ spring:
 mybatis:
     type-aliases-package: fun.xruo.lle.*.pojo
     mapper-locations: classpath*:/templates/*.xml
+
+my:
+    framework:
+        artifact: fun.xruo
+        group: lle
+        module: sys

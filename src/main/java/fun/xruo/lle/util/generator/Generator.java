@@ -5,7 +5,12 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Import;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.*;
@@ -13,7 +18,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author kevin
+ */
 @Slf4j
+@Import(Config.class)
+@EnableConfigurationProperties(Config.class)
 public class Generator {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -27,11 +37,14 @@ public class Generator {
     private static final List<TemplateFile> TEMPLATES = Arrays.asList(
             new TemplateFile("Controller", "Controller.java.ftl", "java"),
             new TemplateFile("DAO", "DAO.java.ftl", "java"),
-            new TemplateFile("", "DO.java.ftl", "java"),
+            new TemplateFile("DO", "DO.java.ftl", "java"),
             new TemplateFile("Service", "Service.java.ftl", "java"),
-            new TemplateFile("ServiceImpl",  "ServiceImpl.java.ftl", "java"),
+            new TemplateFile("ServiceImpl", "ServiceImpl.java.ftl", "java"),
             new TemplateFile("DAO", "DAO.xml.ftl", "xml")
     );
+
+    @Resource
+    Config config;
 
     public static void main(String[] args) {
         Generator generator = new Generator();
@@ -132,6 +145,7 @@ public class Generator {
                 column.setClassName(resultSetMetaData.getColumnClassName(i));
                 column.setLabel(resultSetMetaData.getColumnLabel(i));
                 column.setDisplaySize(resultSetMetaData.getColumnDisplaySize(i));
+                column.setJavaType(Column.getJavaClassNameByTypeName(column.getTypeName()));
                 column.setLowerCamelName(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, column.getName()));
                 list.add(column);
                 log.info("column: {}", column);
