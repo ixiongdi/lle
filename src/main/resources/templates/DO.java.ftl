@@ -16,11 +16,11 @@ public class ${upperCamelName} extends BaseDO {
     <#switch column.name>
         <#case 'id'>
             <#break>
-        <#case 'gmt_create'>
+        <#case 'create_time'>
             <#break>
-        <#case 'gmt_modified'>
+        <#case 'update_time'>
             <#break>
-        <#case 'is_deleted'>
+        <#case 'deleted'>
             <#break>
         <#default>
             private ${column.javaType} ${column.lowerCamelName};

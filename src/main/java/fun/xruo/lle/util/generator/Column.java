@@ -1,5 +1,6 @@
 package fun.xruo.lle.util.generator;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 /**
@@ -17,6 +18,8 @@ public class Column {
 
     private String lowerCamelName;
 
+    private Boolean required;
+
 
     static public String getJavaClassNameByType(Integer type) {
         switch (type) {
@@ -26,7 +29,7 @@ public class Column {
                 return "java.lang.String";
             case 93:
                 return "java.time.LocalDateTime";
-            case -6:
+            case -7:
                 return "java.lang.Boolean";
             default:
                 return "java.lang.Object";
@@ -43,7 +46,7 @@ public class Column {
                 return "java.lang.String";
             case "DATETIME":
                 return "java.time.LocalDateTime";
-            case "TINYINT UNSIGNED":
+            case "BIT":
                 return "java.lang.Boolean";
             default:
                 return "java.lang.Object";

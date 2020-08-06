@@ -66,25 +66,37 @@
     </sql>
 
     <sql id="baseColumns">
-                name,
-                url,
-                type,
-                icon,
-                perms,
-    </sql>
-
-    <sql id="fullColumns">
-            id,
             parent_id,
             name,
             url,
             type,
             icon,
             order_num,
+            perms    </sql>
+
+    <sql id="fullColumns">
+            id,
+
+            parent_id,
+
+            name,
+
+            url,
+
+            type,
+
+            icon,
+
+            order_num,
+
             perms,
+
             create_time,
+
             update_time,
+
             deleted
+
     </sql>
 
     <sql id="selectClause">
@@ -104,18 +116,13 @@
     <insert id="insert" parameterType="sys_menu">
         INSERT INTO sys_menu (<include refid="baseColumns"></include>)
         VALUES (
-        id,
-        parentId,
-        name,
-        url,
-        type,
-        icon,
-        orderNum,
-        perms,
-        createTime,
-        updateTime,
-        deleted
-        )
+        #{parentId},
+        #{name},
+        #{url},
+        #{type},
+        #{icon},
+        #{orderNum},
+        #{perms}        )
     </insert>
 
     <insert id="insertBatch" parameterType="list">

@@ -6,7 +6,7 @@ import org.apache.ibatis.type.Alias;
 
 /**
 * @author CodeGenerate (https://github.com/ixiongdi/lle)
-* @since 2020-5-8 23:23:08
+* @since 2020-8-7 1:01:49
 * sys_menu
 */
 @Data

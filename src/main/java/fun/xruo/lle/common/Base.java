@@ -16,16 +16,16 @@ public abstract class Base {
     private Long id;
 
     /**
-     * gmt_create, datetime
+     * create_time, datetime
      */
     private LocalDateTime gmtCreate;
     /**
-     * gmt_modified, datetime
+     * update_time, datetime
      */
     private LocalDateTime gmtModified;
 
     /**
-     * is_deleted, unsigned tinyint
+     * deleted, unsigned tinyint
      */
     private Boolean deleted;
 }

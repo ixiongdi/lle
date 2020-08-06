@@ -15,16 +15,16 @@ public abstract class BaseDO {
     private Long id;
 
     /**
-     * gmt_create, datetime
+     * create_time, datetime
      */
-    private LocalDateTime gmtCreate;
+    private LocalDateTime createTime;
     /**
-     * gmt_modified, datetime
+     * update_time, datetime
      */
-    private LocalDateTime gmtModified;
+    private LocalDateTime updateTime;
 
     /**
-     * is_deleted, unsigned tinyint
+     * deleted, unsigned tinyint
      */
     private Boolean deleted;
 }

@@ -27,14 +27,14 @@
             <if test="null != perms">
                 and perms = perms
             </if>
-            <if test="null != gmtCreate">
-                and gmt_create = gmtCreate
+            <if test="null != createTime">
+                and create_time = createTime
             </if>
-            <if test="null != gmtModified">
-                and gmt_modified = gmtModified
+            <if test="null != updateTime">
+                and update_time = updateTime
             </if>
-            <if test="null != isDeleted">
-                and is_deleted = isDeleted
+            <if test="null != deleted">
+                and deleted = deleted
             </if>
     </sql>
 
@@ -61,28 +61,42 @@
                         <if test="null != perms">
                             and perms = perms
                         </if>
-                        gmt_modified = CURRENT_TIMESTAMP(),
-                        <if test="null != isDeleted">
-                            and is_deleted = isDeleted
-                        </if>
+                        update_time = CURRENT_TIMESTAMP(),
         </set>
     </sql>
 
     <sql id="baseColumns">
-    </sql>
-
-    <sql id="fullColumns">
-            id,
             parent_id,
             name,
             url,
             type,
             icon,
             order_num,
+            perms    </sql>
+
+    <sql id="fullColumns">
+            id,
+
+            parent_id,
+
+            name,
+
+            url,
+
+            type,
+
+            icon,
+
+            order_num,
+
             perms,
-            gmt_create,
-            gmt_modified,
-            is_deleted
+
+            create_time,
+
+            update_time,
+
+            deleted
+
     </sql>
 
     <sql id="selectClause">
@@ -94,26 +108,21 @@
             icon as icon,
             order_num as orderNum,
             perms as perms,
-            gmt_create as gmtCreate,
-            gmt_modified as gmtModified,
-            is_deleted as isDeleted
+            create_time as createTime,
+            update_time as updateTime,
+            deleted as deleted
     </sql>
 
     <insert id="insert" parameterType="sys_menu">
         INSERT INTO sys_menu (<include refid="baseColumns"></include>)
         VALUES (
-            id,
-            parentId,
-            name,
-            url,
-            type,
-            icon,
-            orderNum,
-            perms,
-            gmtCreate,
-            gmtModified,
-            isDeleted
-        )
+            #{parentId},
+            #{name},
+            #{url},
+            #{type},
+            #{icon},
+            #{orderNum},
+            #{perms}        )
     </insert>
 
     <insert id="insertBatch" parameterType="list">
@@ -137,11 +146,11 @@
             
             perms,
             
-            gmtCreate,
+            createTime,
             
-            gmtModified,
+            updateTime,
             
-            isDeleted
+            deleted
             )
         </foreach>
     </insert>

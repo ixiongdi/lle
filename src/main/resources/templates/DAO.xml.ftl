@@ -16,13 +16,13 @@
                 <#switch column.lowerCamelName>
                     <#case 'id'>
                         <#break>
-                    <#case 'gmtCreate'>
+                    <#case 'createTime'>
                         <#break>
-                    <#case 'gmtModified'>
-                        gmt_modified = CURRENT_TIMESTAMP(),
+                    <#case 'updateTime'>
+                        update_time = CURRENT_TIMESTAMP(),
                         <#break>
                     <#case 'deleted'>
-                        is_deleted = #{deleted}
+<#--                        deleted = ${deleted}-->
                         <#break>
                     <#default>
                         <if test="null != ${column.lowerCamelName}">
@@ -34,17 +34,16 @@
     </sql>
 
     <sql id="baseColumns">
-        <#list columns as column>
-            <#if column.name?matches("[^id|gmt_create|gmt_modified|deleted]")>
-                ${column.name}<#if column.has_next>,</#if>
-            </#if>
+        <#list columns?filter(p -> !p.required) as column>
+            ${column.name}<#sep>,
         </#list>
     </sql>
 
     <sql id="fullColumns">
         <#list columns as column>
             ${column.name}<#sep>,</#sep>
-        </#list>
+
+            </#list>
     </sql>
 
     <sql id="selectClause">
@@ -56,8 +55,8 @@
     <insert id="insert" parameterType="${name}">
         INSERT INTO ${name} (<include refid="baseColumns"></include>)
         VALUES (
-        <#list columns as column>
-            ${column.lowerCamelName}<#sep>,</#sep>
+        <#list columns?filter(p -> !p.required) as column>
+            ${"#"}${"{"}${column.lowerCamelName}${"}"}<#sep>,
         </#list>
         )
     </insert>

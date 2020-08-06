@@ -13,13 +13,13 @@
             and password = #{password}
         </if>
         <if test="null != gmtCreate">
-            and gmt_create = #{gmtCreate}
+            and create_time = #{gmtCreate}
         </if>
         <if test="null != gmtModified">
-            and gmt_modified = #{gmtModified}
+            and update_time = #{gmtModified}
         </if>
         <if test="null != deleted">
-            and is_deleted = #{deleted}
+            and deleted = #{deleted}
         </if>
 <!--        <if test="null != ids">-->
 <!--            id in-->
@@ -37,9 +37,9 @@
             <if test="null != password">
                 password = #{password},
             </if>
-            gmt_modified = CURRENT_TIMESTAMP(),
+            update_time = CURRENT_TIMESTAMP(),
             <if test="null != deleted">
-                is_deleted = #{deleted}
+                deleted = #{deleted}
             </if>
         </set>
     </sql>
@@ -49,11 +49,11 @@
     </sql>
 
     <sql id="fullColumns">
-        id, username, password, gmt_create, gmt_modified, is_deleted
+        id, username, password, create_time, update_time, deleted
     </sql>
 
     <sql id="selectClause">
-        id as id, username as username, password as password, gmt_create as gmtCreate, gmt_modified as gmtModified, is_deleted as deleted
+        id as id, username as username, password as password, create_time as gmtCreate, update_time as gmtModified, deleted as deleted
     </sql>
 
     <insert id="insert" parameterType="sys_user">

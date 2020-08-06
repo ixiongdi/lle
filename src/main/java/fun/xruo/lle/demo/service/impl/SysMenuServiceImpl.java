@@ -15,6 +15,4 @@ import javax.annotation.Resource;
 */
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenu> implements SysMenuService {
-    @Resource
-    SysMenuDAO dao;
 }

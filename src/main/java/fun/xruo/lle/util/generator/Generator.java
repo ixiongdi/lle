@@ -153,6 +153,7 @@ public class Generator {
                 column.setDisplaySize(resultSetMetaData.getColumnDisplaySize(i));
                 column.setJavaType(Column.getJavaClassNameByTypeName(column.getTypeName()));
                 column.setLowerCamelName(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, column.getName()));
+                column.setRequired(column.getName().matches("(id)|(create_time)|(update_time)|(deleted)"));
                 list.add(column);
                 log.info("column: {}", column);
             }

@@ -3,10 +3,12 @@ package fun.xruo.lle.demo.controller;
 import fun.xruo.lle.common.BaseController;
 import fun.xruo.lle.demo.pojo.SysMenu;
 import fun.xruo.lle.demo.service.SysMenuService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author CodeGenerate (https://github.com/ixiongdi/lle)
@@ -35,7 +37,8 @@ public class SysMenuController extends BaseController {
     @RequestMapping("list")
     public Object list(SysMenu sysMenu) {
 
-        return ok(sysMenuService.list(sysMenu));
+        List<SysMenu> list = sysMenuService.list(sysMenu);
+        return ok(list);
     }
 
     @RequestMapping("save")
@@ -45,7 +48,7 @@ public class SysMenuController extends BaseController {
     }
 
     @RequestMapping("insert")
-    public Object insert(SysMenu sysMenu) {
+    public Object insert(@RequestBody SysMenu sysMenu) {
         sysMenuService.insert(sysMenu);
         return ok();
     }

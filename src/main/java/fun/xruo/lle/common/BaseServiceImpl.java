@@ -2,8 +2,11 @@ package fun.xruo.lle.common;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +17,33 @@ import java.util.Map;
  * @since 2020/4/30 16:06
  */
 @Slf4j
-public abstract class BaseServiceImpl<T extends BaseDO> implements BaseService<T> {
+public class BaseServiceImpl<T extends BaseDO>  implements BaseService<T> {
+
+    BaseDAO<T> dao;
 
     @Resource
-    BaseDAO<T> dao;
+    private ApplicationContext context;
+
+    @PostConstruct
+    public void init() {
+        try {
+            Class<T> beanClass = (Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            String daoName = beanClass.getSimpleName();
+            daoName = Character.toLowerCase(daoName.charAt(0)) + daoName.substring(1) + "DAO";
+            Object obj = this.context.getBean(daoName);
+            Field baseDaoNameField = null;
+
+
+            if (null == baseDaoNameField) {
+                baseDaoNameField = this.getClass().getSuperclass().getDeclaredField("dao");
+            }
+
+            baseDaoNameField.set(this, obj);
+        } catch (Exception var6) {
+            log.error("Notice! there's error in generic service configuration!", var6);
+        }
+
+    }
 
 
     /**

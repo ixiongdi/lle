@@ -14,6 +14,4 @@ import javax.annotation.Resource;
  */
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysUserService {
-    @Resource
-    SysUserDAO dao;
 }

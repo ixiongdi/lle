@@ -5,7 +5,7 @@ import fun.xruo.lle.demo.pojo.SysMenu;
 
 /**
 * @author CodeGenerate (https://github.com/ixiongdi/lle)
-* @since 2020-5-8 23:23:08
+* @since 2020-8-7 1:01:49
 * sys_menu
 */
 public interface SysMenuService extends BaseService<SysMenu> {
