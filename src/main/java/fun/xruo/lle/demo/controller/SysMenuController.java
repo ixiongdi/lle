@@ -2,9 +2,11 @@ package fun.xruo.lle.demo.controller;
 
 import fun.xruo.lle.common.BaseController;
 import fun.xruo.lle.demo.pojo.SysMenu;
+import fun.xruo.lle.demo.pojo.query.SysMenuQuery;
 import fun.xruo.lle.demo.service.SysMenuService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -35,8 +37,7 @@ public class SysMenuController extends BaseController {
     }
 
     @RequestMapping("list")
-    public Object list(SysMenu sysMenu) {
-
+    public Object list(@RequestBody SysMenu sysMenu) {
         List<SysMenu> list = sysMenuService.list(sysMenu);
         return ok(list);
     }
@@ -59,7 +60,7 @@ public class SysMenuController extends BaseController {
     }
 
     @RequestMapping("delete")
-    public Object delete(Long id) {
+    public Object delete(@RequestParam Long id) {
         sysMenuService.delete(id);
         return ok();
     }
