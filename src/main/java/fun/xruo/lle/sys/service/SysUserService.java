@@ -1,11 +1,13 @@
 package fun.xruo.lle.sys.service;
 
-import fun.xruo.lle.common.BaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import fun.xruo.lle.sys.pojo.SysUser;
+import org.springframework.stereotype.Service;
 
 /**
  * @author xiongdi (kotlin@qq.com)
  * @since 2020/4/30 15:59
  */
-public interface SysUserService extends BaseService<SysUser> {
+@Service
+public interface SysUserService extends IService<SysUser> {
 }

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost/dev?useSSL=false
+    url: jdbc:mysql://localhost/dev?useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 1234
 

@@ -1,6 +1,6 @@
 package fun.xruo.lle.sys.dao;
 
-import fun.xruo.lle.common.BaseDAO;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import fun.xruo.lle.sys.pojo.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,5 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component
-public interface SysUserDAO extends BaseDAO<SysUser> {
-
-
+public interface SysUserDAO extends BaseMapper<SysUser> {
 }
