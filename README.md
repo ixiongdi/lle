@@ -96,4 +96,4 @@ docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=1234 -e TZ="Asia/Sha
 id: SERIAL BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE
 create_time: not null DEFAULT CURRENT_TIMESTAMP
 update_time: default NULL ON UPDATE CURRENT_TIMESTAMP
-deleted: BOOL tinyint(1) default false
+deleted: BOOL tinyint(1) default false，这里并没有使用阿里推荐的is_deleted是因为这个字段通常并不会暴露给业务端，它存在的意义是防止误删和暴露历史数据，这个特例的存在反而会带来更多麻烦

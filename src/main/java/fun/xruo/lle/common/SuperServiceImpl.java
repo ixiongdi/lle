@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.kotlin.KtUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.Serializable;
@@ -15,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * @author xiongdi
+ */
 public class SuperServiceImpl<T> implements IService<T> {
     @Override
     public boolean save(T entity) {
@@ -202,12 +207,27 @@ public class SuperServiceImpl<T> implements IService<T> {
     }
 
     @Override
+    public Class<T> getEntityClass() {
+        return null;
+    }
+
+    @Override
     public QueryChainWrapper<T> query() {
         return null;
     }
 
     @Override
     public LambdaQueryChainWrapper<T> lambdaQuery() {
+        return null;
+    }
+
+    @Override
+    public KtQueryChainWrapper<T> ktQuery() {
+        return null;
+    }
+
+    @Override
+    public KtUpdateChainWrapper<T> ktUpdate() {
         return null;
     }
 
