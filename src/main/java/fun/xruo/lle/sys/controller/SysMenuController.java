@@ -8,7 +8,6 @@ import fun.xruo.lle.sys.pojo.query.SysMenuQuery;
 import fun.xruo.lle.sys.service.SysMenuService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -25,48 +24,44 @@ public class SysMenuController {
     @Resource
     SysMenuService sysMenuService;
 
-    @RequestMapping("index")
-    public Object index(@RequestBody SysMenuQuery query) {
+
+    @RequestMapping("get")
+    public Object get(@RequestBody SysMenuQuery query) {
+        return sysMenuService.getById(query.getId());
+    }
+
+    @RequestMapping("list")
+    public Object list(@RequestBody SysMenuQuery query) {
         int total = sysMenuService.count(Wrappers.query(query));
-        Page<SysMenu> page = new Page<SysMenu>(query.getCurrent(), query.getSize(), total);
+        Page<SysMenu> page = new Page<>(query.getCurrent(), query.getSize(), total);
         page.setOptimizeCountSql(false);
         page.setSearchCount(false);
         return sysMenuService.page(page, Wrappers.query(query));
     }
 
-    @RequestMapping("get")
-    public Object get(Long id) {
-        return sysMenuService.getById(id);
-    }
-
-    @RequestMapping("list")
-    public Object list(@RequestBody SysMenu sysMenu) {
-        return sysMenuService.list(Wrappers.query(sysMenu));
+    @RequestMapping("count")
+    public Object count(@RequestBody SysMenuQuery query) {
+        return sysMenuService.count(new QueryWrapper<>(query));
     }
 
     @RequestMapping("save")
-    public void save(SysMenu sysMenu) {
-        sysMenuService.updateById(sysMenu);
+    public Object save(@RequestBody SysMenu sysMenu) {
+        return sysMenuService.save(sysMenu);
     }
 
-    @RequestMapping("insert")
-    public void insert(@RequestBody SysMenu sysMenu) {
-        sysMenuService.save(sysMenu);
+    @RequestMapping("remove")
+    public Object remove(@RequestBody SysMenuQuery query) {
+        return sysMenuService.removeByIds(query.getIds());
     }
 
-    @RequestMapping("count")
-    public Object count(SysMenu sysMenu) {
-        return sysMenuService.count(new QueryWrapper<>(sysMenu));
+    @RequestMapping("update")
+    public Object update(@RequestBody SysMenu sysMenu) {
+        return sysMenuService.updateById(sysMenu);
     }
 
-    @RequestMapping("delete")
-    public void delete(@RequestParam Long id) {
-        sysMenuService.removeById(id);
-    }
 
     @RequestMapping("tree")
     public Object tree() {
         return sysMenuService.tree();
     }
-
 }

@@ -1,17 +1,23 @@
 package fun.xruo.lle;
 
 import fun.xruo.lle.sys.pojo.SysMenu;
+import fun.xruo.lle.sys.pojo.SysUser;
 import fun.xruo.lle.sys.service.SysMenuService;
+import fun.xruo.lle.sys.service.SysUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.UUID;
 
 @SpringBootTest
 class LleApplicationTests {
 
     @Resource
     SysMenuService sysMenuService;
+
+    @Resource
+    SysUserService sysUserService;
 
     @Test
     void contextLoads() {
@@ -24,4 +30,13 @@ class LleApplicationTests {
 
     }
 
+    @Test
+    void insertSysUser() {
+        for (int i = 0; i < 1000; i++) {
+            SysUser sysUser = new SysUser();
+            sysUser.setUsername(UUID.randomUUID().toString().substring(0, 10));
+            sysUser.setPassword(UUID.randomUUID().toString());
+            sysUserService.save(sysUser);
+        }
+    }
 }

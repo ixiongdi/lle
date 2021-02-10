@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url: jdbc:mysql://mysql.ca3zw9ojro1a.rds.cn-northwest-1.amazonaws.com.cn:3306
+        url: jdbc:mysql://mysql.ca3zw9ojro1a.rds.cn-northwest-1.amazonaws.com.cn:3306/lle
         username: lle
         password: lle
 

@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author xiongdi
+ */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuDAO, SysMenu> implements SysMenuService {
     @Override
