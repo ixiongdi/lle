@@ -25,7 +25,7 @@ class LleApplicationTests {
         sysMenu.setName("百度");
         sysMenu.setUrl("http://baidu.com");
         for (int i = 0; i < 10; i++) {
-            sysMenuService.save(sysMenu);
+//            sysMenuService.save(sysMenu);
         }
     }
 
@@ -35,7 +35,7 @@ class LleApplicationTests {
             SysUser sysUser = new SysUser();
             sysUser.setUsername(UUID.randomUUID().toString().substring(0, 10));
             sysUser.setPassword(UUID.randomUUID().toString());
-            sysUserService.save(sysUser);
+//            sysUserService.save(sysUser);
         }
     }
 }
