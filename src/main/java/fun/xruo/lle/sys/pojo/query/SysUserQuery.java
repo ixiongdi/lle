@@ -13,4 +13,6 @@ public class SysUserQuery extends SysUser {
 
     Long current;
     Long size;
+
+    String usernameLike;
 }

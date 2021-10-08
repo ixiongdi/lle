@@ -1,7 +1,6 @@
 package fun.xruo.lle.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import fun.xruo.lle.sys.pojo.SysUser;
 import fun.xruo.lle.sys.pojo.query.SysUserQuery;
@@ -33,11 +32,13 @@ public class SysUserController {
 
     @RequestMapping("list")
     public Object list(@RequestBody SysUserQuery query) {
-        long total = sysUserService.count(Wrappers.query(query));
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>(query);
+        queryWrapper.like("username", query.getUsernameLike());
+        long total = sysUserService.count(queryWrapper);
         Page<SysUser> page = new Page<>(query.getCurrent(), query.getSize(), total);
         page.setOptimizeCountSql(false);
         page.setSearchCount(false);
-        return sysUserService.page(page, Wrappers.query(query));
+        return sysUserService.page(page, queryWrapper);
     }
 
     @RequestMapping("count")
