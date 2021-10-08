@@ -1,7 +1,6 @@
 package fun.xruo.lle.sys.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import fun.xruo.lle.sys.pojo.SysMenu;
 import fun.xruo.lle.sys.pojo.query.SysMenuQuery;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author CodeGenerate (https://github.com/ixiongdi/lle)
@@ -24,7 +25,6 @@ public class SysMenuController {
     @Resource
     SysMenuService sysMenuService;
 
-
     @RequestMapping("get")
     public Object get(@RequestBody SysMenuQuery query) {
         return sysMenuService.getById(query.getId());
@@ -32,11 +32,15 @@ public class SysMenuController {
 
     @RequestMapping("list")
     public Object list(@RequestBody SysMenuQuery query) {
-        int total = sysMenuService.count(Wrappers.query(query));
+        QueryWrapper<SysMenu> queryWrapper = new QueryWrapper<>(query);
+        if (Objects.nonNull(query.getNameLike())) {
+            queryWrapper.like("name", query.getNameLike());
+        }
+        long total = sysMenuService.count(queryWrapper);
         Page<SysMenu> page = new Page<>(query.getCurrent(), query.getSize(), total);
         page.setOptimizeCountSql(false);
         page.setSearchCount(false);
-        return sysMenuService.page(page, Wrappers.query(query));
+        return sysMenuService.page(page, queryWrapper);
     }
 
     @RequestMapping("count")
@@ -56,9 +60,9 @@ public class SysMenuController {
 
     @RequestMapping("update")
     public Object update(@RequestBody SysMenu sysMenu) {
+        sysMenu.setUpdateTime(LocalDateTime.now());
         return sysMenuService.updateById(sysMenu);
     }
-
 
     @RequestMapping("tree")
     public Object tree() {

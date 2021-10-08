@@ -2,6 +2,7 @@ package fun.xruo.lle.sys.pojo;
 
 import fun.xruo.lle.common.BaseDO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.ibatis.type.Alias;
 
 /**
@@ -10,6 +11,7 @@ import org.apache.ibatis.type.Alias;
  * sys_user
  */
 @Data
+@EqualsAndHashCode
 @Alias("sys_user")
 public class SysUser extends BaseDO {
     /**

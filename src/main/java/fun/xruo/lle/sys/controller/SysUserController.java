@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 /**
  * @author CodeGenerate (https://github.com/ixiongdi/lle)
@@ -32,7 +33,7 @@ public class SysUserController {
 
     @RequestMapping("list")
     public Object list(@RequestBody SysUserQuery query) {
-        int total = sysUserService.count(Wrappers.query(query));
+        long total = sysUserService.count(Wrappers.query(query));
         Page<SysUser> page = new Page<>(query.getCurrent(), query.getSize(), total);
         page.setOptimizeCountSql(false);
         page.setSearchCount(false);
@@ -56,6 +57,7 @@ public class SysUserController {
 
     @RequestMapping("update")
     public Object update(@RequestBody SysUser dto) {
+        dto.setUpdateTime(LocalDateTime.now());
         return sysUserService.updateById(dto);
     }
 }

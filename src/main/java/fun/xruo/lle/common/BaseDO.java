@@ -1,6 +1,7 @@
 package fun.xruo.lle.common;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.OrderBy;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -17,6 +18,7 @@ public abstract class BaseDO {
      * id, bigint unsigned
      */
     @TableId(type = IdType.AUTO)
+    @OrderBy
     private Long id;
 
     /**

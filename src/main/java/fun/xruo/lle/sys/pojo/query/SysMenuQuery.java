@@ -11,6 +11,8 @@ import java.util.Set;
 public class SysMenuQuery extends SysMenu {
     Set<Long> ids;
 
-    Long current;
-    Long size;
+    Long current = 1L;
+    Long size = 10L;
+
+    String nameLike;
 }

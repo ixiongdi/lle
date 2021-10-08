@@ -34,9 +34,7 @@ public class BaseServiceImpl<T extends BaseDO>  implements BaseService<T> {
             Field baseDaoNameField = null;
 
 
-            if (null == baseDaoNameField) {
-                baseDaoNameField = this.getClass().getSuperclass().getDeclaredField("dao");
-            }
+            baseDaoNameField = this.getClass().getSuperclass().getDeclaredField("dao");
 
             baseDaoNameField.set(this, obj);
         } catch (Exception var6) {

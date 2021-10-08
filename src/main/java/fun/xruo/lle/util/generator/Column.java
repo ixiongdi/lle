@@ -1,6 +1,5 @@
 package fun.xruo.lle.util.generator;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 /**

@@ -1,9 +1,8 @@
 package fun.xruo.lle.common;
 
-import lombok.Data;
+import java.util.List;
 
-@Data
-public class BaseQuery {
-    Long current = 1L;
-    Long size = 20L;
-}
+/**
+ * @author xiongdi
+ */
+public record BaseQuery(Long current, Long size, List<Long>ids) { }

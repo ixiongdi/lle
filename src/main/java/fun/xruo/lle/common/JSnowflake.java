@@ -24,14 +24,14 @@ public class JSnowflake {
 
     private final long workerIdBits = 5L;
     private final long dataCenterIdBits = 5L;
-    private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
-    private final long maxDataCenterId = -1L ^ (-1L << dataCenterIdBits);
+    private final long maxWorkerId = ~(-1L << workerIdBits);
+    private final long maxDataCenterId = ~(-1L << dataCenterIdBits);
     private final long sequenceBits = 12L;
 
     private final long workerIdShift = sequenceBits;
     private final long dataCenterIdShift = sequenceBits + workerIdBits;
     private final long timestampLeftShift = sequenceBits + workerIdBits + dataCenterIdBits;
-    private final long sequenceMask = -1L ^ (-1L << sequenceBits);
+    private final long sequenceMask = ~(-1L << sequenceBits);
 
     private static final int R_SEED = 100;
 

@@ -132,12 +132,12 @@ public class SuperServiceImpl<T> implements IService<T> {
     }
 
     @Override
-    public int count() {
+    public long count() {
         return 0;
     }
 
     @Override
-    public int count(Wrapper<T> queryWrapper) {
+    public long count(Wrapper<T> queryWrapper) {
         return 0;
     }
 
