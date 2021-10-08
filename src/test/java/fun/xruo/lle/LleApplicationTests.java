@@ -24,15 +24,14 @@ class LleApplicationTests {
         SysMenu sysMenu = new SysMenu();
         sysMenu.setName("百度");
         sysMenu.setUrl("http://baidu.com");
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             sysMenuService.save(sysMenu);
         }
-
     }
 
     @Test
     void insertSysUser() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10; i++) {
             SysUser sysUser = new SysUser();
             sysUser.setUsername(UUID.randomUUID().toString().substring(0, 10));
             sysUser.setPassword(UUID.randomUUID().toString());
