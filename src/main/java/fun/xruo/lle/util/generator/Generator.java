@@ -70,13 +70,13 @@ public class Generator {
             }
             for (TemplateFile file : TEMPLATES) {
                 // 加载模板
-                Template template = configuration.getTemplate(file.getSrcPath());
+                Template template = configuration.getTemplate(file.srcPath());
 
-                if (!Files.isDirectory(Paths.get("gen", file.getDstPath()))) {
-                    Files.createDirectories(Paths.get("gen", file.getDstPath()));
+                if (!Files.isDirectory(Paths.get("gen", file.dstPath()))) {
+                    Files.createDirectories(Paths.get("gen", file.dstPath()));
                 }
                 // 数据模型
-                FileWriter writer = new FileWriter("gen/" + file.getDstPath() + table.getUpperCamelName() + file.getName() + "." + file.getType());
+                FileWriter writer = new FileWriter("gen/" + file.dstPath() + table.getUpperCamelName() + file.name() + "." + file.type());
                 template.process(table, writer);
             }
 
@@ -120,7 +120,7 @@ public class Generator {
             while (rs.next()) {
                 Table table = new Table();
                 table.setName(rs.getString(3));
-                table.setRemarks(rs.getString(5));
+                table.setComment(rs.getString(5));
                 table.setUpperCamelName(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, table.getName()));
                 table.setLowerCamelName(CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, table.getName()));
                 if (table.getName().equals("sys_config")) {

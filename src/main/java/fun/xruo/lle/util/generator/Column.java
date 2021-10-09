@@ -9,6 +9,7 @@ import lombok.Data;
 public class Column {
     private String name;
     private Integer type;
+    private Object defaultValue;
     private String javaType;
     private String typeName;
     private String className;
