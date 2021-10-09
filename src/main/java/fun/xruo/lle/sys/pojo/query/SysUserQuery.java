@@ -11,8 +11,8 @@ import java.util.Set;
 public class SysUserQuery extends SysUser {
     Set<Long> ids;
 
-    Long current;
-    Long size;
+    Long current = 1L;
+    Long size = 10L;
 
     String usernameLike;
 }

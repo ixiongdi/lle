@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -31,11 +33,14 @@ class LleApplicationTests {
 
     @Test
     void insertSysUser() {
-        for (int i = 0; i < 10; i++) {
+        List<SysUser> sysUserList = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
             SysUser sysUser = new SysUser();
             sysUser.setUsername(UUID.randomUUID().toString().substring(0, 10));
             sysUser.setPassword(UUID.randomUUID().toString());
+            sysUserList.add(sysUser);
 //            sysUserService.save(sysUser);
         }
+        sysUserService.saveBatch(sysUserList);
     }
 }

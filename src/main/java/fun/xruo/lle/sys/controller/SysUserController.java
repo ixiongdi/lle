@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import fun.xruo.lle.sys.pojo.SysUser;
 import fun.xruo.lle.sys.pojo.query.SysUserQuery;
 import fun.xruo.lle.sys.service.SysUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,9 @@ public class SysUserController {
     @RequestMapping("list")
     public Object list(@RequestBody SysUserQuery query) {
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>(query);
-        queryWrapper.like("username", query.getUsernameLike());
+        if (StringUtils.isNotBlank(query.getUsernameLike())) {
+            queryWrapper.like("username", query.getUsernameLike());
+        }
         long total = sysUserService.count(queryWrapper);
         Page<SysUser> page = new Page<>(query.getCurrent(), query.getSize(), total);
         page.setOptimizeCountSql(false);
