@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="fun.xruo.lle.demo.dao.SysMenuDAO">
+<mapper namespace="fun.xruo.lle.demo.dao.SysUserDAO">
 
     <sql id="whereClause">
             <if test="null != id">
                 and id = id
             </if>
-            <if test="null != parentId">
-                and parent_id = parentId
+            <if test="null != username">
+                and username = username
             </if>
-            <if test="null != name">
-                and name = name
-            </if>
-            <if test="null != url">
-                and url = url
+            <if test="null != password">
+                and password = password
             </if>
             <if test="null != createTime">
                 and create_time = createTime
@@ -24,161 +21,125 @@
             <if test="null != deleted">
                 and deleted = deleted
             </if>
-            <if test="null != icon">
-                and icon = icon
-            </if>
-            <if test="null != orderNum">
-                and order_num = orderNum
-            </if>
     </sql>
 
     <sql id="updateClause">
         <set>
-                        <if test="null != parentId">
-                            and parent_id = parentId
+                        <if test="null != username">
+                            and username = username
                         </if>
-                        <if test="null != name">
-                            and name = name
-                        </if>
-                        <if test="null != url">
-                            and url = url
+                        <if test="null != password">
+                            and password = password
                         </if>
                         update_time = CURRENT_TIMESTAMP(),
-                        <if test="null != icon">
-                            and icon = icon
-                        </if>
-                        <if test="null != orderNum">
-                            and order_num = orderNum
-                        </if>
         </set>
     </sql>
 
     <sql id="baseColumns">
-            parent_id,
-            name,
-            url,
-            icon,
-            order_num    </sql>
+            username,
+            password    </sql>
 
     <sql id="fullColumns">
             id,
 
-            parent_id,
+            username,
 
-            name,
-
-            url,
+            password,
 
             create_time,
 
             update_time,
 
-            deleted,
-
-            icon,
-
-            order_num
+            deleted
 
     </sql>
 
     <sql id="selectClause">
             id as id,
-            parent_id as parentId,
-            name as name,
-            url as url,
+            username as username,
+            password as password,
             create_time as createTime,
             update_time as updateTime,
-            deleted as deleted,
-            icon as icon,
-            order_num as orderNum
+            deleted as deleted
     </sql>
 
-    <insert id="insert" parameterType="sys_menu">
-        INSERT INTO sys_menu (<include refid="baseColumns"></include>)
+    <insert id="insert" parameterType="sys_user">
+        INSERT INTO sys_user (<include refid="baseColumns"></include>)
         VALUES (
-            #{parentId},
-            #{name},
-            #{url},
-            #{icon},
-            #{orderNum}        )
+            #{username},
+            #{password}        )
     </insert>
 
     <insert id="insertBatch" parameterType="list">
-        INSERT INTO sys_menu (<include refid="baseColumns"></include>)
+        INSERT INTO sys_user (<include refid="baseColumns"></include>)
         VALUES
         <foreach item="item" index="index" collection="list" open="" separator="," close="">
             (
             id,
             
-            parentId,
+            username,
             
-            name,
-            
-            url,
+            password,
             
             createTime,
             
             updateTime,
             
-            deleted,
-            
-            icon,
-            
-            orderNum
+            deleted
             )
         </foreach>
     </insert>
 
-    <select id="select" parameterType="sys_user" resultType="sys_menu">
+    <select id="select" parameterType="sys_user" resultType="sys_user">
         SELECT
         <include refid="selectClause"></include>
-        FROM sys_menu
+        FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>
     </select>
 
-    <select id="selectById" parameterType="long" resultType="sys_menu">
+    <select id="selectById" parameterType="long" resultType="sys_user">
         SELECT
         <include refid="selectClause"></include>
-        FROM sys_menu
+        FROM sys_user
         WHERE id = #{id}
     </select>
 
-    <select id="selectBatchByIds" parameterType="list" resultType="sys_menu">
+    <select id="selectBatchByIds" parameterType="list" resultType="sys_user">
         SELECT
         <include refid="selectClause"></include>
-        FROM sys_menu
+        FROM sys_user
         WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
 
-    <select id="selectBatchByArgs" parameterType="map" resultType="sys_menu">
+    <select id="selectBatchByArgs" parameterType="map" resultType="sys_user">
         SELECT
         <include refid="selectClause"></include>
-        FROM sys_menu
+        FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>
     </select>
 
-    <select id="count" parameterType="sys_menu" resultType="long">
-        SELECT COUNT(*) FROM sys_menu
+    <select id="count" parameterType="sys_user" resultType="long">
+        SELECT COUNT(*) FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>
     </select>
 
     <select id="countByArgs" parameterType="map" resultType="long">
-        SELECT COUNT(*) FROM sys_menu
+        SELECT COUNT(*) FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>
     </select>
 
-    <update id="update" parameterType="sys_menu">
+    <update id="update" parameterType="sys_user">
         UPDATE sys_user
         <include refid="updateClause"></include>
         WHERE id =  #{id}
@@ -191,7 +152,7 @@
     </update>
 
     <update id="updateBatchByIds">
-        UPDATE sys_menu
+        UPDATE sys_user
         <include refid="updateClause"></include>
         WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
@@ -200,33 +161,33 @@
     </update>
 
     <update id="updateBatchByArgs" parameterType="map">
-        UPDATE sys_menu
+        UPDATE sys_user
         <include refid="updateClause"></include>
         <where>
             <include refid="whereClause"></include>
         </where>
     </update>
 
-    <delete id="delete" parameterType="sys_menu">
-        DELETE FROM sys_menu
+    <delete id="delete" parameterType="sys_user">
+        DELETE FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>
     </delete>
 
     <delete id="deleteById" parameterType="long">
-        DELETE FROM sys_menu WHERE id = #{id}
+        DELETE FROM sys_user WHERE id = #{id}
     </delete>
 
     <delete id="deleteBatchByIds" parameterType="list">
-        DELETE FROM sys_menu WHERE id in
+        DELETE FROM sys_user WHERE id in
         <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
             #{item}
         </foreach>
     </delete>
 
     <select id="deleteBatchByArgs" parameterType="map">
-        DELETE FROM sys_menu
+        DELETE FROM sys_user
         <where>
             <include refid="whereClause"></include>
         </where>

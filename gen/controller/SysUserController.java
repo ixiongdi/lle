@@ -1,8 +1,8 @@
 package fun.xruo.lle.demo.controller;
 
 import fun.xruo.lle.common.BaseController;
-import fun.xruo.lle.demo.pojo.SysMenu;
-import fun.xruo.lle.demo.service.SysMenuService;
+import fun.xruo.lle.demo.pojo.SysUser;
+import fun.xruo.lle.demo.service.SysUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,14 +11,14 @@ import javax.annotation.Resource;
 /**
 * @author CodeGenerate (https://github.com/ixiongdi/lle)
 * @since 2021年10月9日 上午11:53:50
-* sys_menu
+* sys_user
 */
 @RestController
-@RequestMapping("/api/sys/sys_menu")
-public class SysMenuController extends BaseController {
+@RequestMapping("/api/sys/sys_user")
+public class SysUserController extends BaseController {
 
 @Resource
-SysMenuService sysMenuService;
+SysUserService sysUserService;
 
 @RequestMapping("index")
 public Object index(Integer page, Integer size) {
@@ -29,47 +29,47 @@ return ok();
 @RequestMapping("get")
 public Object get(Long id) {
 
-return ok(sysMenuService.get(id));
+return ok(sysUserService.get(id));
 }
 
 @RequestMapping("list")
-public Object list(SysMenu sysMenu) {
+public Object list(SysUser sysUser) {
 
-return ok(sysMenuService.list(sysMenu));
+return ok(sysUserService.list(sysUser));
 }
 
 @RequestMapping("save")
-public Object save(SysMenu sysMenu) {
-sysMenuService.save(sysMenu);
+public Object save(SysUser sysUser) {
+sysUserService.save(sysUser);
 return ok();
 }
 
 @RequestMapping("insert")
-public Object insert(SysMenu sysMenu) {
-sysMenuService.insert(sysMenu);
+public Object insert(SysUser sysUser) {
+sysUserService.insert(sysUser);
 return ok();
 }
 
 @RequestMapping("count")
-public Object count(SysMenu sysMenu) {
-return ok(sysMenuService.count(sysMenu));
+public Object count(SysUser sysUser) {
+return ok(sysUserService.count(sysUser));
 }
 
 @RequestMapping("delete")
 public Object delete(Long id) {
-sysMenuService.delete(id);
+sysUserService.delete(id);
 return ok();
 }
 
 @RequestMapping("remove")
 public Object remove(Long id) {
-sysMenuService.remove(id);
+sysUserService.remove(id);
 return ok();
 }
 
 @RequestMapping("update")
-public Object update(SysMenu sysMenu) {
-sysMenuService.update(sysMenu);
+public Object update(SysUser sysUser) {
+sysUserService.update(sysUser);
 return ok();
 }
 }

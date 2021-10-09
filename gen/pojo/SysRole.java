@@ -7,14 +7,10 @@ import org.apache.ibatis.type.Alias;
 /**
 * @author CodeGenerate (https://github.com/ixiongdi/lle)
 * @since 2021年10月9日 上午11:53:50
-* sys_menu
+* sys_role
 */
 @Data
-@Alias("sys_menu")
-public class SysMenu extends BaseDO {
-            private java.lang.Integer parentId;
+@Alias("sys_role")
+public class SysRole extends BaseDO {
             private java.lang.String name;
-            private java.lang.String url;
-            private java.lang.String icon;
-            private java.lang.Integer orderNum;
 }

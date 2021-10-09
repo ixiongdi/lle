@@ -40,7 +40,8 @@ public class Generator {
             new TemplateFile("", "java", "DO.java.ftl", "pojo/"),
             new TemplateFile("Service", "java", "Service.java.ftl", "service/"),
             new TemplateFile("ServiceImpl", "java", "ServiceImpl.java.ftl", "service/impl/"),
-            new TemplateFile("DAO", "xml", "DAO.xml.ftl", "dao/")
+            new TemplateFile("DAO", "xml", "DAO.xml.ftl", "dao/"),
+            new TemplateFile("View", "vue", "View.vue.ftl", "vue/")
     );
 
     @Resource
