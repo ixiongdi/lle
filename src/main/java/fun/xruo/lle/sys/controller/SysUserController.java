@@ -8,6 +8,7 @@ import fun.xruo.lle.sys.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -32,13 +33,13 @@ public class SysUserController {
     }
 
     @RequestMapping("list")
-    public Object list(@RequestBody SysUserQuery query) {
+    public Object list(@RequestBody SysUserQuery query, @RequestParam Long current, @RequestParam Long size) {
         QueryWrapper<SysUser> queryWrapper = new QueryWrapper<>(query);
         if (StringUtils.isNotBlank(query.getUsernameLike())) {
             queryWrapper.like("username", query.getUsernameLike());
         }
         long total = sysUserService.count(queryWrapper);
-        Page<SysUser> page = new Page<>(query.getCurrent(), query.getSize(), total);
+        Page<SysUser> page = new Page<>(current, size, total);
         page.setOptimizeCountSql(false);
         page.setSearchCount(false);
         return sysUserService.page(page, queryWrapper);

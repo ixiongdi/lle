@@ -1,12 +1,15 @@
 package fun.xruo.lle.common;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.List;
@@ -142,11 +145,11 @@ public class BaseServiceImpl<T extends BaseDO>  implements BaseService<T> {
     @Override
     public void remove(Long id) {
         try {
-            T t = getClazz().newInstance();
+            T t = getClazz().getDeclaredConstructor().newInstance();
 //            TypeToken<T> tt = new TypeToken<T>() {};
             t.setDeleted(true);
             dao.updateById(id, t);
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             log.error("remove id: {}, error: {}", id, e.getMessage());
         }
     }
@@ -166,10 +169,10 @@ public class BaseServiceImpl<T extends BaseDO>  implements BaseService<T> {
         try {
             Map<String, Object> args = new HashMap<>(1);
             args.put("ids", ids);
-            T t = getClazz().newInstance();
+            T t = getClazz().getDeclaredConstructor().newInstance();
             t.setDeleted(true);
             dao.updateBatchByArgs(args, t);
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
             log.error("remove ids: {}, error: {}", ids, e.getMessage());
         }
 
@@ -235,6 +238,13 @@ public class BaseServiceImpl<T extends BaseDO>  implements BaseService<T> {
     @Override
     public void update(List<Long> ids, T t) {
         dao.updateBatchByIds(ids, t);
+    }
+
+    @Override
+    public IPage<T> page(T t, Page<T> page) {
+        page.setTotal(dao.count(t));
+        page.setRecords(dao.select(t));
+        return page;
     }
 
 

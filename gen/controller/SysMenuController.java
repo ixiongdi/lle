@@ -1,8 +1,8 @@
-package fun.xruo.lle.demo.controller;
+package fun.xruo.lle.sys.controller;
 
 import fun.xruo.lle.common.BaseController;
-import fun.xruo.lle.demo.pojo.SysMenu;
-import fun.xruo.lle.demo.service.SysMenuService;
+import fun.xruo.lle.sys.pojo.SysMenu;
+import fun.xruo.lle.sys.service.SysMenuService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 /**
 * @author CodeGenerate (https://github.com/ixiongdi/lle)
-* @since 2021年10月9日 上午11:53:50
+* @since 2021年10月9日 下午7:16:11
 * sys_menu
 */
 @RestController

@@ -3,10 +3,9 @@ spring:
         url: jdbc:mysql://mysql.ca3zw9ojro1a.rds.cn-northwest-1.amazonaws.com.cn:3306/lle
         username: lle
         password: lle
-#
-#mybatis:
-#    type-aliases-package: fun.xruo.lle.*.pojo
-#    mapper-locations: classpath*:/fun/xruo/lle/**/*.xml
+mybatis:
+    type-aliases-package: fun.xruo.lle.*.pojo
+    mapper-locations: classpath*:/fun/xruo/lle/**/*.xml
 
 logging:
     level:

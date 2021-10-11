@@ -1,5 +1,8 @@
 package fun.xruo.lle.common;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import java.util.List;
 
 /**
@@ -112,4 +115,7 @@ public interface BaseService<T> {
      * @param t
      */
     void update(List<Long> ids, T t);
+
+
+    IPage<T> page(T t, Page<T> page);
 }

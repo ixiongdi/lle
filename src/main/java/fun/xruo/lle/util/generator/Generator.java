@@ -30,7 +30,7 @@ public class Generator {
     private static final String URL = "jdbc:mysql://mysql.ca3zw9ojro1a.rds.cn-northwest-1.amazonaws.com.cn:3306/lle";
     private static final String USERNAME = "lle";
     private static final String PASSWORD = "lle";
-    private static final String PACKAGE = "fun.xruo.lle.demo";
+    private static final String PACKAGE = "fun.xruo.lle.sys";
     private static final String GROUP_ID = "fun.xruo.lle";
     private static final String ARTIFACT_ID = "";
     private static final String MODULE_ID = "sys";
